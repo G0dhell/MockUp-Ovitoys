@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ovi Toys — Mockup Pembayaran Virtual Account</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --white:#FFFFFF; --soft:#FFF7F2; --ink:#241C2B; --ink-soft:#6B6070;
+    --pink:#FF5D8F; --pink-dark:#E14577; --marigold:#FFB000; --mint:#22B996;
+    --mint-soft:#E3FAF3; --lavender:#8B7FD1; --lavender-soft:#F1EEFC;
+    --line:#F0E6E0; --pink-soft:#FFE9F0; --marigold-soft:#FFF3D9;
+    --shadow: 0 10px 30px -12px rgba(36,28,43,0.15);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{ font-family:'Plus Jakarta Sans', sans-serif; color:var(--ink); background:var(--soft); -webkit-font-smoothing:antialiased;}
+  h1,h2,h3{ font-family:'Baloo 2', sans-serif; font-weight:700;}
+  a{color:inherit; text-decoration:none;}
+  button, input{font-family:inherit;}
+  .wrap{max-width:1000px; margin:0 auto; padding:0 24px;}
+
+  header.site{ background:white; border-bottom:1px solid var(--line); padding:16px 0;}
+  .header-row{ display:flex; align-items:center; justify-content:space-between;}
+  .logo{ display:flex; align-items:center; gap:10px; font-family:'Baloo 2'; font-weight:800; font-size:20px;}
+  .logo .mark{ width:36px; height:36px; border-radius:10px; background:var(--pink); display:flex; align-items:center; justify-content:center;}
+  .secure-badge{ display:flex; align-items:center; gap:6px; font-size:12.5px; font-weight:700; color:var(--mint); background:var(--mint-soft); padding:7px 14px; border-radius:999px;}
+
+  .stepper-bar{ background:white; border-bottom:1px solid var(--line); padding:18px 0;}
+  .steps{ display:flex; align-items:center; gap:10px; justify-content:center;}
+  .step{ display:flex; align-items:center; gap:8px; font-size:13px; font-weight:700; color:var(--ink-soft);}
+  .step .dot{ width:26px; height:26px; border-radius:50%; background:var(--soft); color:var(--ink-soft); display:flex; align-items:center; justify-content:center; font-size:12.5px; font-weight:800;}
+  .step.done .dot{ background:var(--mint); color:white;}
+  .step.active .dot{ background:var(--pink); color:white;}
+  .step.active{ color:var(--ink);}
+  .step-line{ width:50px; height:2px; background:var(--line);}
+
+  .page-body{ padding:36px 0 80px;}
+
+  .status-banner{
+    display:flex; align-items:center; gap:14px; background:var(--marigold-soft);
+    border:1.3px solid #F0CB6B; border-radius:18px; padding:16px 20px; margin-bottom:22px;
+  }
+  .status-banner .ic{ width:38px; height:38px; border-radius:50%; background:var(--marigold); display:flex; align-items:center; justify-content:center; flex-shrink:0;}
+  .status-banner .txt b{ display:block; font-size:14px;}
+  .status-banner .txt span{ font-size:12.5px; color:var(--ink-soft);}
+  .status-banner .timer{ margin-left:auto; text-align:right;}
+  .status-banner .timer .label{ font-size:11px; color:var(--ink-soft); font-weight:700;}
+  .status-banner .timer .time{ font-family:'Baloo 2'; font-size:20px; font-weight:800; color:var(--pink-dark);}
+
+  .card{ background:white; border:1.5px solid var(--line); border-radius:20px; padding:26px; margin-bottom:18px;}
+  .card-head{ display:flex; align-items:center; gap:12px; margin-bottom:20px;}
+  .bank-badge{ width:52px; height:52px; border-radius:14px; background:var(--lavender-soft); display:flex; align-items:center; justify-content:center; font-family:'Baloo 2'; font-weight:800; color:var(--lavender); font-size:15px;}
+  .card-head h3{ font-size:16px;}
+  .card-head p{ font-size:12.5px; color:var(--ink-soft); margin-top:2px;}
+
+  .va-box{ background:var(--soft); border:1.5px dashed var(--line); border-radius:16px; padding:18px 20px; margin-bottom:14px;}
+  .va-label{ font-size:11.5px; font-weight:800; text-transform:uppercase; letter-spacing:.03em; color:var(--ink-soft); margin-bottom:8px;}
+  .va-row{ display:flex; align-items:center; justify-content:space-between; gap:14px;}
+  .va-number{ font-family:'Baloo 2'; font-size:22px; font-weight:800; letter-spacing:.03em;}
+  .copy-btn{ display:flex; align-items:center; gap:6px; background:var(--ink); color:white; font-weight:700; font-size:12.5px; padding:9px 16px; border-radius:10px; flex-shrink:0;}
+
+  .amount-row{ display:flex; align-items:center; justify-content:space-between; padding:18px 20px; background:var(--pink-soft); border-radius:16px;}
+  .amount-label{ font-size:12px; font-weight:700; color:var(--pink-dark); margin-bottom:4px;}
+  .amount-value{ font-family:'Baloo 2'; font-size:26px; font-weight:800; color:var(--pink-dark);}
+  .copy-btn.pink{ background:var(--pink);}
+
+  .steps-guide{ margin-top:8px;}
+  .guide-tabs{ display:flex; gap:8px; margin-bottom:18px; flex-wrap:wrap;}
+  .guide-tab{ padding:9px 16px; border-radius:999px; font-size:12.5px; font-weight:700; border:1.5px solid var(--line); color:var(--ink-soft);}
+  .guide-tab.active{ background:var(--ink); color:white; border-color:var(--ink);}
+  .guide-list{ list-style:none; display:flex; flex-direction:column; gap:12px;}
+  .guide-list li{ display:flex; gap:12px; font-size:13px; color:var(--ink-soft); line-height:1.6;}
+  .guide-num{ width:24px; height:24px; border-radius:50%; background:var(--soft); color:var(--ink); font-weight:800; font-size:11.5px; display:flex; align-items:center; justify-content:center; flex-shrink:0;}
+
+  .order-mini{ display:flex; justify-content:space-between; font-size:13px; color:var(--ink-soft); padding:10px 0; border-top:1px solid var(--line);}
+  .order-mini:first-child{ border-top:none; padding-top:0;}
+  .order-mini b{ color:var(--ink);}
+
+  .btn-row{ display:flex; gap:12px; margin-top:8px;}
+  .btn-primary{ flex:1; background:var(--pink); color:white; font-weight:800; font-size:14px; padding:15px; border-radius:14px; box-shadow:var(--shadow); border:none; cursor:pointer;}
+  .btn-secondary{ flex:1; background:white; color:var(--ink); font-weight:700; font-size:14px; padding:15px; border-radius:14px; border:1.5px solid var(--line); cursor:pointer;}
+
+  .xendit-note{ text-align:center; font-size:11.5px; color:var(--ink-soft); margin-top:16px; display:flex; align-items:center; justify-content:center; gap:6px;}
+  .wa-note{ text-align:center; font-size:12.5px; font-weight:700; color:var(--mint); margin-top:14px; display:flex; align-items:center; justify-content:center; gap:6px;}
+</style>
+</head>
+<body>
+
+  <header class="site">
+    <div class="wrap header-row">
+      <a href="index.html" class="logo">
+        <span class="mark"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="7" cy="6" r="2.6" fill="white"/><circle cx="17" cy="6" r="2.6" fill="white"/><rect x="4.5" y="9.5" width="15" height="12" rx="6" fill="white"/></svg></span>
+        Ovi Toys
+      </a>
+      <div class="secure-badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22B996" stroke-width="2.3"><path d="M12 2 4 5v6c0 5 3.4 8.7 8 11 4.6-2.3 8-6 8-11V5l-8-3Z"/></svg>
+        Checkout Aman
+      </div>
+    </div>
+  </header>
+
+  <div class="stepper-bar">
+    <div class="steps">
+      <div class="step done"><span class="dot">✓</span> Keranjang</div>
+      <div class="step-line"></div>
+      <div class="step done"><span class="dot">✓</span> Checkout</div>
+      <div class="step-line"></div>
+      <div class="step active"><span class="dot">3</span> Pembayaran</div>
+    </div>
+  </div>
+
+  <div class="wrap page-body">
+
+    <div class="status-banner">
+      <div class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.3"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+      <div class="txt"><b>Menunggu Pembayaran</b><span>Order #OVI1043 — selesaikan sebelum waktu habis</span></div>
+      <div class="timer"><div class="label">Sisa Waktu</div><div class="time" id="countdown">23:59:47</div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <div class="bank-badge">BCA</div>
+        <div>
+          <h3>Transfer Virtual Account BCA</h3>
+          <p>Bayar lewat m-Banking, ATM, atau Internet Banking BCA</p>
+        </div>
+      </div>
+
+      <div class="va-box">
+        <div class="va-label">Nomor Virtual Account</div>
+        <div class="va-row">
+          <div class="va-number">8808 1234 5678 90</div>
+          <button class="copy-btn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg>
+            Salin
+          </button>
+        </div>
+      </div>
+
+      <div class="amount-row">
+        <div>
+          <div class="amount-label">Total yang Harus Dibayar</div>
+          <div class="amount-value">Rp254.000</div>
+        </div>
+        <button class="copy-btn pink">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg>
+          Salin Nominal
+        </button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head" style="margin-bottom:14px;"><h3>Cara Pembayaran</h3></div>
+      <div class="guide-tabs">
+        <div class="guide-tab active">m-BCA</div>
+        <div class="guide-tab">ATM BCA</div>
+        <div class="guide-tab">KlikBCA</div>
+      </div>
+      <ul class="guide-list">
+        <li><span class="guide-num">1</span> Buka aplikasi BCA mobile, pilih menu <b style="color:var(--ink);">m-Transfer</b>.</li>
+        <li><span class="guide-num">2</span> Pilih <b style="color:var(--ink);">BCA Virtual Account</b>, masukkan nomor VA di atas.</li>
+        <li><span class="guide-num">3</span> Pastikan nama penerima <b style="color:var(--ink);">"OVI TOYS"</b> muncul, lalu cek nominal transfer.</li>
+        <li><span class="guide-num">4</span> Masukkan PIN m-BCA kamu untuk menyelesaikan pembayaran.</li>
+        <li><span class="guide-num">5</span> Pembayaran akan otomatis terverifikasi dalam beberapa menit.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-head" style="margin-bottom:10px;"><h3>Ringkasan Pesanan</h3></div>
+      <div class="order-mini"><span>Order ID</span><b>#OVI1043</b></div>
+      <div class="order-mini"><span>Jumlah Produk</span><b>2 item</b></div>
+      <div class="order-mini"><span>Metode Pengiriman</span><b>J&amp;T Reguler</b></div>
+      <div class="order-mini"><span>Total Pembayaran</span><b style="color:var(--pink-dark);">Rp254.000</b></div>
+    </div>
+
+    <div class="btn-row">
+      <a href="keranjang.html" class="btn-secondary" style="text-decoration:none; display:flex; align-items:center; justify-content:center;">Batalkan Pesanan</a>
+      <a href="pembayaran-sukses.html" class="btn-primary" style="text-decoration:none; display:flex; align-items:center; justify-content:center;">Cek Status Pembayaran</a>
+    </div>
+
+    <div class="xendit-note">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#6B6070" stroke-width="2"><path d="M12 2 4 5v6c0 5 3.4 8.7 8 11 4.6-2.3 8-6 8-11V5l-8-3Z"/></svg>
+      Pembayaran diproses aman melalui Xendit
+    </div>
+    <div class="wa-note">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="#22B996"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2Z"/></svg>
+      Butuh bantuan? Chat Admin via WhatsApp
+    </div>
+  </div>
+
+  <script>
+    document.querySelectorAll('.copy-btn').forEach(b=>{
+      b.addEventListener('click', ()=>{
+        const original = b.innerHTML;
+        b.innerHTML = '✓ Tersalin';
+        setTimeout(()=>{ b.innerHTML = original; }, 1500);
+      });
+    });
+    document.querySelectorAll('.guide-tab').forEach(t=>{
+      t.addEventListener('click', ()=>{
+        document.querySelectorAll('.guide-tab').forEach(x=>x.classList.remove('active'));
+        t.classList.add('active');
+      });
+    });
+    // simple countdown display (static demo)
+    let time = 23*3600 + 59*60 + 47;
+    setInterval(()=>{
+      if(time<=0) return;
+      time--;
+      const h = String(Math.floor(time/3600)).padStart(2,'0');
+      const m = String(Math.floor((time%3600)/60)).padStart(2,'0');
+      const s = String(time%60).padStart(2,'0');
+      document.getElementById('countdown').textContent = `${h}:${m}:${s}`;
+    }, 1000);
+  </script>
+</body>
+</html>

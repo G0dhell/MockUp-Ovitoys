@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ovi Toys — Mockup Dashboard Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --white:#FFFFFF; --bg:#F7F5FA; --panel:#FFFFFF; --ink:#241C2B; --ink-soft:#726B7A;
+    --pink:#FF5D8F; --pink-dark:#E14577; --marigold:#FFB000; --mint:#22B996;
+    --mint-soft:#E3FAF3; --lavender:#8B7FD1; --lavender-soft:#F1EEFC;
+    --line:#EAE6EF; --pink-soft:#FFE9F0; --marigold-soft:#FFF3D9; --red:#EF4444; --red-soft:#FDECEC;
+    --sidebar:#1D1526; --shadow:0 6px 20px -10px rgba(36,28,43,0.12);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{ font-family:'Plus Jakarta Sans', sans-serif; color:var(--ink); background:var(--bg); -webkit-font-smoothing:antialiased;}
+  h1,h2,h3{ font-family:'Baloo 2', sans-serif; font-weight:700;}
+  a{color:inherit; text-decoration:none;}
+  button, input{font-family:inherit;}
+
+  .app{ display:grid; grid-template-columns:250px 1fr; min-height:100vh;}
+
+  /* SIDEBAR */
+  .sidebar{ background:var(--sidebar); color:#DCD5E3; padding:22px 16px; display:flex; flex-direction:column;}
+  .side-logo{ display:flex; align-items:center; gap:10px; font-family:'Baloo 2'; font-weight:800; font-size:19px; color:white; padding:8px 10px 26px;}
+  .side-logo .mark{ width:34px; height:34px; border-radius:10px; background:var(--pink); display:flex; align-items:center; justify-content:center; flex-shrink:0;}
+  .side-group{ font-size:10.5px; font-weight:800; letter-spacing:.06em; text-transform:uppercase; color:#7A7286; margin:16px 10px 8px;}
+  .side-link{ display:flex; align-items:center; gap:12px; padding:10px 12px; border-radius:10px; font-size:13.5px; font-weight:600; margin-bottom:2px;}
+  .side-link.active{ background:rgba(255,255,255,.08); color:white;}
+  .side-link:hover{ background:rgba(255,255,255,.05);}
+  .side-link .badge{ margin-left:auto; background:var(--pink); color:white; font-size:10px; font-weight:800; padding:2px 7px; border-radius:999px;}
+  .side-bottom{ margin-top:auto; padding-top:16px; border-top:1px solid rgba(255,255,255,.08);}
+  .side-user{ display:flex; align-items:center; gap:10px; padding:10px;}
+  .side-user .av{ width:34px; height:34px; border-radius:50%; background:var(--pink); display:flex; align-items:center; justify-content:center; font-weight:800; font-family:'Baloo 2'; color:white; font-size:13px;}
+  .side-user .name{ font-size:12.5px; font-weight:700; color:white;}
+  .side-user .role{ font-size:11px; color:#9A93A6;}
+
+  /* MAIN */
+  .main{ padding:26px 32px 60px;}
+  .topbar{ display:flex; align-items:center; justify-content:space-between; margin-bottom:26px; gap:20px;}
+  .topbar h1{ font-size:23px;}
+  .topbar p{ font-size:12.5px; color:var(--ink-soft); margin-top:2px;}
+  .search-mini{ display:flex; align-items:center; gap:8px; background:white; border:1.5px solid var(--line); border-radius:12px; padding:10px 14px; width:280px; font-size:13px; color:var(--ink-soft);}
+  .search-mini input{ border:none; outline:none; font:inherit; width:100%;}
+  .top-actions{ display:flex; align-items:center; gap:12px;}
+  .icon-mini{ width:38px; height:38px; border-radius:10px; background:white; border:1.5px solid var(--line); display:flex; align-items:center; justify-content:center; position:relative;}
+  .icon-mini .dot{ position:absolute; top:-3px; right:-3px; width:9px; height:9px; border-radius:50%; background:var(--pink); border:2px solid var(--bg);}
+
+  /* KPI CARDS */
+  .kpi-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:24px;}
+  .kpi-card{ background:var(--panel); border:1.5px solid var(--line); border-radius:18px; padding:20px; box-shadow:var(--shadow);}
+  .kpi-top{ display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;}
+  .kpi-icon{ width:38px; height:38px; border-radius:11px; display:flex; align-items:center; justify-content:center;}
+  .kpi-trend{ font-size:11.5px; font-weight:800; padding:3px 8px; border-radius:8px;}
+  .kpi-trend.up{ color:#127A5F; background:var(--mint-soft);}
+  .kpi-trend.down{ color:var(--red); background:var(--red-soft);}
+  .kpi-value{ font-family:'Baloo 2'; font-size:24px; font-weight:800; margin-bottom:4px;}
+  .kpi-label{ font-size:12px; color:var(--ink-soft); font-weight:600;}
+
+  /* CONTENT GRID */
+  .content-grid{ display:grid; grid-template-columns:1.6fr 1fr; gap:18px; margin-bottom:20px; align-items:start;}
+  .panel{ background:var(--panel); border:1.5px solid var(--line); border-radius:18px; padding:22px; box-shadow:var(--shadow);}
+  .panel-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:18px;}
+  .panel-head h3{ font-size:15.5px;}
+  .panel-head a{ font-size:12px; font-weight:700; color:var(--pink-dark);}
+
+  /* chart placeholder */
+  .chart-bars{ display:flex; align-items:flex-end; gap:10px; height:150px; padding-top:10px;}
+  .chart-bars .bar{ flex:1; background:linear-gradient(180deg, var(--pink), var(--pink-dark)); border-radius:8px 8px 3px 3px; position:relative;}
+  .chart-bars .bar.alt{ background:linear-gradient(180deg, var(--lavender-soft), var(--lavender));}
+  .chart-labels{ display:flex; gap:10px; margin-top:8px;}
+  .chart-labels span{ flex:1; text-align:center; font-size:10.5px; color:var(--ink-soft); font-weight:600;}
+
+  /* table */
+  table{ width:100%; border-collapse:collapse;}
+  th{ text-align:left; font-size:10.5px; text-transform:uppercase; letter-spacing:.03em; color:var(--ink-soft); font-weight:800; padding:0 10px 12px;}
+  td{ padding:12px 10px; font-size:12.5px; border-top:1px solid var(--line);}
+  .order-id{ font-weight:700;}
+  .cust{ display:flex; align-items:center; gap:8px;}
+  .cust .av{ width:26px; height:26px; border-radius:50%; background:var(--lavender-soft); color:var(--lavender); display:flex; align-items:center; justify-content:center; font-size:10.5px; font-weight:800; font-family:'Baloo 2';}
+  .status{ font-size:10.5px; font-weight:800; padding:4px 9px; border-radius:999px; display:inline-block;}
+  .status.paid{ background:var(--mint-soft); color:#127A5F;}
+  .status.pending{ background:var(--marigold-soft); color:#8A6300;}
+  .status.custom{ background:var(--pink-soft); color:var(--pink-dark);}
+
+  /* review moderation list */
+  .review-item{ padding:13px 0; border-top:1px solid var(--line);}
+  .review-item:first-child{ border-top:none; padding-top:0;}
+  .review-top{ display:flex; align-items:center; justify-content:space-between; margin-bottom:6px;}
+  .review-user{ display:flex; align-items:center; gap:8px; font-size:12.5px; font-weight:700;}
+  .review-user .av{ width:24px; height:24px; border-radius:50%; background:var(--pink-soft); color:var(--pink-dark); display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:800; font-family:'Baloo 2';}
+  .review-text{ font-size:12px; color:var(--ink-soft); margin-bottom:8px; line-height:1.5;}
+  .review-actions{ display:flex; gap:8px;}
+  .btn-approve{ background:var(--mint); color:white; font-size:11px; font-weight:800; padding:6px 12px; border-radius:8px;}
+  .btn-reject{ background:var(--red-soft); color:var(--red); font-size:11px; font-weight:800; padding:6px 12px; border-radius:8px;}
+
+  /* low stock */
+  .stock-item{ display:flex; align-items:center; gap:12px; padding:10px 0; border-top:1px solid var(--line);}
+  .stock-item:first-child{ border-top:none; padding-top:0;}
+  .stock-thumb{ width:36px; height:36px; border-radius:9px; background:var(--pink-soft); display:flex; align-items:center; justify-content:center; flex-shrink:0;}
+  .stock-name{ font-size:12.5px; font-weight:700; flex:1;}
+  .stock-qty{ font-size:11px; font-weight:800; color:var(--red); background:var(--red-soft); padding:3px 8px; border-radius:7px;}
+
+  /* custom order queue */
+  .custom-item{ display:flex; gap:12px; align-items:center; padding:12px 0; border-top:1px solid var(--line);}
+  .custom-item:first-child{ border-top:none; padding-top:0;}
+  .custom-thumb{ width:44px; height:44px; border-radius:10px; background:var(--marigold-soft); display:flex; align-items:center; justify-content:center; flex-shrink:0;}
+  .custom-body{ flex:1;}
+  .custom-name{ font-size:12.5px; font-weight:700;}
+  .custom-meta{ font-size:11px; color:var(--ink-soft);}
+  .btn-review{ background:var(--ink); color:white; font-size:11px; font-weight:800; padding:7px 12px; border-radius:8px; white-space:nowrap;}
+
+  @media(max-width:1100px){
+    .app{ grid-template-columns:1fr;}
+    .sidebar{ display:none;}
+    .kpi-grid{ grid-template-columns:repeat(2,1fr);}
+    .content-grid{ grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <a href="index.html" class="side-logo" style="text-decoration:none;">
+      <span class="mark"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="7" cy="6" r="2.6" fill="white"/><circle cx="17" cy="6" r="2.6" fill="white"/><rect x="4.5" y="9.5" width="15" height="12" rx="6" fill="white"/></svg></span>
+      Ovi Toys Admin
+    </a>
+
+    <div class="side-group">Menu Utama</div>
+    <a href="#" class="side-link active">📊 Dashboard</a>
+    <a href="#" class="side-link">🧸 Produk</a>
+    <a href="#" class="side-link">🧾 Pesanan <span class="badge">12</span></a>
+    <a href="#" class="side-link">👥 Pelanggan</a>
+
+    <div class="side-group">Konten &amp; Promo</div>
+    <a href="#" class="side-link">⭐ Ulasan <span class="badge">5</span></a>
+    <a href="#" class="side-link">🏷️ Voucher</a>
+    <a href="#" class="side-link">🎁 Bundling</a>
+    <a href="#" class="side-link">📷 Custom Order <span class="badge">3</span></a>
+
+    <div class="side-group">Sistem</div>
+    <a href="#" class="side-link">🚚 Ekspedisi</a>
+    <a href="#" class="side-link">💳 Pembayaran</a>
+    <a href="#" class="side-link">⚙️ Pengaturan</a>
+
+    <div class="side-bottom">
+      <div class="side-user">
+        <div class="av">O</div>
+        <div><div class="name">Owi</div><div class="role">Super Admin</div></div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+    <div class="topbar">
+      <div>
+        <h1>Selamat datang, Owi 👋</h1>
+        <p>Ini ringkasan performa toko Ovi Toys hari ini</p>
+      </div>
+      <div class="top-actions">
+        <div class="search-mini">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" placeholder="Cari pesanan, produk, pelanggan...">
+        </div>
+        <div class="icon-mini"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#241C2B" stroke-width="2"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg><span class="dot"></span></div>
+        <div class="icon-mini"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#241C2B" stroke-width="2"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2Z"/></svg></div>
+      </div>
+    </div>
+
+    <!-- KPI -->
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-top">
+          <div class="kpi-icon" style="background:var(--pink-soft);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E14577" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+          <span class="kpi-trend up">↑ 12%</span>
+        </div>
+        <div class="kpi-value">Rp18,4jt</div>
+        <div class="kpi-label">Penjualan Bulan Ini</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-top">
+          <div class="kpi-icon" style="background:var(--lavender-soft);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8B7FD1" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></div>
+          <span class="kpi-trend up">↑ 8%</span>
+        </div>
+        <div class="kpi-value">312</div>
+        <div class="kpi-label">Pesanan Baru</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-top">
+          <div class="kpi-icon" style="background:var(--mint-soft);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1C9C81" stroke-width="2"><circle cx="7" cy="6" r="2.4"/><circle cx="17" cy="6" r="2.4"/><rect x="4.5" y="9.5" width="15" height="11" rx="5.5"/></svg></div>
+          <span class="kpi-trend up">↑ 21%</span>
+        </div>
+        <div class="kpi-value">1.240</div>
+        <div class="kpi-label">Produk Terjual</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-top">
+          <div class="kpi-icon" style="background:var(--marigold-soft);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B37E00" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg></div>
+          <span class="kpi-trend down">↓ 3%</span>
+        </div>
+        <div class="kpi-value">89</div>
+        <div class="kpi-label">Pelanggan Baru</div>
+      </div>
+    </div>
+
+    <!-- CONTENT: chart + orders / side widgets -->
+    <div class="content-grid">
+      <div>
+        <div class="panel" style="margin-bottom:18px;">
+          <div class="panel-head">
+            <h3>Tren Penjualan 7 Hari Terakhir</h3>
+            <a href="#">Lihat Laporan →</a>
+          </div>
+          <div class="chart-bars">
+            <div class="bar" style="height:45%;"></div>
+            <div class="bar alt" style="height:60%;"></div>
+            <div class="bar" style="height:38%;"></div>
+            <div class="bar alt" style="height:72%;"></div>
+            <div class="bar" style="height:55%;"></div>
+            <div class="bar alt" style="height:90%;"></div>
+            <div class="bar" style="height:68%;"></div>
+          </div>
+          <div class="chart-labels"><span>Sen</span><span>Sel</span><span>Rab</span><span>Kam</span><span>Jum</span><span>Sab</span><span>Min</span></div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <h3>Pesanan Terbaru</h3>
+            <a href="#">Lihat Semua →</a>
+          </div>
+          <table>
+            <tr><th>ID</th><th>Pelanggan</th><th>Produk</th><th>Total</th><th>Status</th></tr>
+            <tr>
+              <td class="order-id">#OVI1042</td>
+              <td><div class="cust"><span class="av">R</span> Rani A.</div></td>
+              <td>Boneka Beruang 40cm</td>
+              <td>Rp89.000</td>
+              <td><span class="status paid">Dibayar</span></td>
+            </tr>
+            <tr>
+              <td class="order-id">#OVI1041</td>
+              <td><div class="cust"><span class="av">D</span> Dimas P.</div></td>
+              <td>Boneka Custom by Foto</td>
+              <td>Rp165.000</td>
+              <td><span class="status custom">Cek Custom</span></td>
+            </tr>
+            <tr>
+              <td class="order-id">#OVI1040</td>
+              <td><div class="cust"><span class="av">S</span> Siti M.</div></td>
+              <td>Pengharum Vanilla ×24</td>
+              <td>Rp528.000</td>
+              <td><span class="status pending">Menunggu Bayar</span></td>
+            </tr>
+            <tr>
+              <td class="order-id">#OVI1039</td>
+              <td><div class="cust"><span class="av">A</span> Andi K.</div></td>
+              <td>Paket Hemat Bestie</td>
+              <td>Rp99.000</td>
+              <td><span class="status paid">Dibayar</span></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- RIGHT WIDGETS -->
+      <div>
+        <div class="panel" style="margin-bottom:18px;">
+          <div class="panel-head"><h3>📷 Antrean Custom Order</h3></div>
+          <div class="custom-item">
+            <div class="custom-thumb"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B37E00" stroke-width="1.8"><rect x="3" y="6" width="18" height="14" rx="2"/><circle cx="12" cy="13" r="3.5"/><path d="M8 6l1.5-2h5L16 6"/></svg></div>
+            <div class="custom-body"><div class="custom-name">Dimas P. — foto_kucing.jpg</div><div class="custom-meta">Menunggu konfirmasi desain</div></div>
+            <button class="btn-review">Cek</button>
+          </div>
+          <div class="custom-item">
+            <div class="custom-thumb"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B37E00" stroke-width="1.8"><rect x="3" y="6" width="18" height="14" rx="2"/><circle cx="12" cy="13" r="3.5"/><path d="M8 6l1.5-2h5L16 6"/></svg></div>
+            <div class="custom-body"><div class="custom-name">Winda S. — foto_anjing.jpg</div><div class="custom-meta">Menunggu konfirmasi desain</div></div>
+            <button class="btn-review">Cek</button>
+          </div>
+          <div class="custom-item">
+            <div class="custom-thumb"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B37E00" stroke-width="1.8"><rect x="3" y="6" width="18" height="14" rx="2"/><circle cx="12" cy="13" r="3.5"/><path d="M8 6l1.5-2h5L16 6"/></svg></div>
+            <div class="custom-body"><div class="custom-name">Reza F. — foto_couple.jpg</div><div class="custom-meta">Sudah dikonfirmasi, proses produksi</div></div>
+            <button class="btn-review">Cek</button>
+          </div>
+        </div>
+
+        <div class="panel" style="margin-bottom:18px;">
+          <div class="panel-head"><h3>⭐ Moderasi Ulasan</h3></div>
+          <div class="review-item">
+            <div class="review-top">
+              <div class="review-user"><span class="av">L</span> Lina W.</div>
+              <span style="color:var(--marigold); font-size:11.5px;">★★★★★</span>
+            </div>
+            <p class="review-text">Bonekanya lucu banget, pengiriman cepat!</p>
+            <div class="review-actions"><button class="btn-approve">Setujui</button><button class="btn-reject">Tolak</button></div>
+          </div>
+          <div class="review-item">
+            <div class="review-top">
+              <div class="review-user"><span class="av">F</span> Fajar N.</div>
+              <span style="color:var(--marigold); font-size:11.5px;">★★★★☆</span>
+            </div>
+            <p class="review-text">Wanginya enak tapi agak lama sampainya.</p>
+            <div class="review-actions"><button class="btn-approve">Setujui</button><button class="btn-reject">Tolak</button></div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head"><h3>⚠️ Stok Menipis</h3></div>
+          <div class="stock-item">
+            <div class="stock-thumb"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E14577" stroke-width="1.8"><circle cx="7" cy="6" r="2.4"/><circle cx="17" cy="6" r="2.4"/><rect x="4.5" y="9.5" width="15" height="11" rx="5.5"/></svg></div>
+            <div class="stock-name">Boneka Couple Sepasang</div>
+            <span class="stock-qty">3 pcs</span>
+          </div>
+          <div class="stock-item">
+            <div class="stock-thumb"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1C9C81" stroke-width="1.8"><path d="M9 3h6l1 3H8l1-3Z"/><rect x="7" y="6" width="10" height="15" rx="2"/></svg></div>
+            <div class="stock-name">Parfum Mobil Lavender</div>
+            <span class="stock-qty">7 pcs</span>
+          </div>
+          <div class="stock-item">
+            <div class="stock-thumb"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#B37E00" stroke-width="1.8"><circle cx="7" cy="6" r="2.4"/><circle cx="17" cy="6" r="2.4"/><rect x="4.5" y="9.5" width="15" height="11" rx="5.5"/></svg></div>
+            <div class="stock-name">Boneka Mini Gantungan</div>
+            <span class="stock-qty">5 pcs</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+</body>
+</html>

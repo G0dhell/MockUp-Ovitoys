@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ovi Toys — Mockup Homepage</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --white:#FFFFFF;
+    --soft:#FFF7F2;
+    --ink:#241C2B;
+    --ink-soft:#6B6070;
+    --pink:#FF5D8F;
+    --pink-dark:#E14577;
+    --marigold:#FFB000;
+    --mint:#22B996;
+    --mint-soft:#E3FAF3;
+    --lavender:#8B7FD1;
+    --lavender-soft:#F1EEFC;
+    --line:#F0E6E0;
+    --pink-soft:#FFE9F0;
+    --marigold-soft:#FFF3D9;
+    --radius:20px;
+    --shadow: 0 10px 30px -12px rgba(36,28,43,0.15);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    font-family:'Plus Jakarta Sans', sans-serif;
+    color:var(--ink);
+    background:var(--white);
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.display{
+    font-family:'Baloo 2', sans-serif;
+    font-weight:700;
+    letter-spacing:-0.01em;
+  }
+  img,svg{display:block;}
+  a{color:inherit; text-decoration:none;}
+  button{font-family:inherit; cursor:pointer; border:none; background:none;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 24px;}
+
+  /* zigzag / scallop signature */
+  .scallop-bottom{
+    position:relative;
+  }
+  .scallop-bottom::after{
+    content:"";
+    position:absolute; left:0; right:0; bottom:-1px; height:18px;
+    background:
+      radial-gradient(circle at 9px 0, transparent 9px, var(--white) 9.5px) repeat-x;
+    background-size: 24px 18px;
+  }
+
+  /* ===== Top promo bar ===== */
+  .promo-bar{
+    background:var(--ink);
+    color:var(--white);
+    text-align:center;
+    font-size:13px;
+    font-weight:600;
+    letter-spacing:.01em;
+    padding:9px 16px;
+  }
+  .promo-bar span.dot{ color:var(--marigold); padding:0 8px;}
+
+  /* ===== Header ===== */
+  header.site{
+    position:sticky; top:0; z-index:50;
+    background:var(--white);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-row{
+    display:flex; align-items:center; gap:28px;
+    padding:16px 24px;
+  }
+  .logo{
+    display:flex; align-items:center; gap:10px;
+    font-family:'Baloo 2'; font-weight:800; font-size:22px;
+    color:var(--ink);
+    flex-shrink:0;
+  }
+  .logo .mark{
+    width:40px; height:40px; border-radius:12px;
+    background:var(--pink);
+    display:flex; align-items:center; justify-content:center;
+  }
+  nav.main-links{
+    display:flex; gap:26px; font-weight:600; font-size:14.5px;
+    color:var(--ink-soft);
+  }
+  nav.main-links a:hover{ color:var(--pink-dark); }
+  .nav-spacer{flex:1;}
+  .search-box{
+    display:flex; align-items:center; gap:8px;
+    background:var(--soft);
+    border:1.5px solid var(--line);
+    border-radius:999px;
+    padding:9px 16px;
+    width:280px;
+    color:var(--ink-soft);
+    font-size:13.5px;
+  }
+  .search-box input{
+    border:none; background:none; outline:none; font:inherit; color:var(--ink);
+    width:100%;
+  }
+  .icon-btn{
+    position:relative;
+    width:40px; height:40px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    background:var(--soft);
+    flex-shrink:0;
+  }
+  .icon-btn .badge{
+    position:absolute; top:-3px; right:-3px;
+    background:var(--pink); color:white; font-size:10px; font-weight:800;
+    width:17px; height:17px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    border:2px solid white;
+  }
+  .header-actions{display:flex; align-items:center; gap:10px;}
+  .btn-login{
+    display:flex; align-items:center; gap:8px;
+    font-weight:700; font-size:13.5px;
+    padding:9px 16px; border-radius:999px;
+    background:var(--ink); color:white;
+  }
+
+  /* ===== Hero ===== */
+  .hero{
+    background:var(--soft);
+    padding:56px 0 72px;
+  }
+  .hero-grid{
+    display:grid; grid-template-columns:1.05fr .95fr; gap:48px; align-items:center;
+  }
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    background:var(--pink-soft); color:var(--pink-dark);
+    font-weight:700; font-size:12.5px; letter-spacing:.04em; text-transform:uppercase;
+    padding:7px 14px; border-radius:999px; margin-bottom:18px;
+  }
+  .hero h1{
+    font-size:46px; line-height:1.12; margin-bottom:16px;
+  }
+  .hero h1 .accent{ color:var(--pink); }
+  .hero p.lead{
+    font-size:16px; color:var(--ink-soft); line-height:1.6; max-width:440px; margin-bottom:26px;
+  }
+  .hero-ctas{ display:flex; gap:12px; margin-bottom:30px; flex-wrap:wrap;}
+  .btn-primary{
+    background:var(--pink); color:white; font-weight:700; font-size:14.5px;
+    padding:15px 26px; border-radius:999px; box-shadow:var(--shadow);
+  }
+  .btn-secondary{
+    background:white; color:var(--ink); font-weight:700; font-size:14.5px;
+    padding:15px 26px; border-radius:999px; border:1.5px solid var(--line);
+  }
+  .trust-row{ display:flex; gap:22px; flex-wrap:wrap;}
+  .trust-item{ display:flex; align-items:center; gap:8px; font-size:13px; font-weight:600; color:var(--ink-soft);}
+
+  .hero-art{
+    position:relative;
+    background:white;
+    border-radius:28px;
+    border:1.5px solid var(--line);
+    box-shadow:var(--shadow);
+    padding:30px;
+    display:grid; grid-template-columns:1fr 1fr; gap:16px;
+  }
+  .art-card{
+    background:var(--lavender-soft);
+    border-radius:18px;
+    padding:18px;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px;
+    aspect-ratio:1/1;
+  }
+  .art-card.pink{background:var(--pink-soft);}
+  .art-card.mint{background:var(--mint-soft);}
+  .art-card.marigold{background:var(--marigold-soft);}
+  .art-card span{font-size:12px; font-weight:700; color:var(--ink-soft);}
+  .float-tag{
+    position:absolute; top:-14px; right:22px;
+    background:var(--marigold); color:var(--ink);
+    font-weight:800; font-size:12.5px;
+    padding:9px 16px; border-radius:999px;
+    box-shadow:var(--shadow);
+    display:flex; align-items:center; gap:6px;
+  }
+
+  /* ===== Section heading ===== */
+  .section{ padding:56px 0; }
+  .section-head{
+    display:flex; align-items:flex-end; justify-content:space-between; margin-bottom:28px; gap:20px; flex-wrap:wrap;
+  }
+  .section-head h2{ font-size:28px; }
+  .section-head p{ color:var(--ink-soft); font-size:14px; margin-top:6px;}
+  .see-all{ font-weight:700; font-size:13.5px; color:var(--pink-dark); display:flex; align-items:center; gap:4px; white-space:nowrap;}
+
+  /* ===== Categories ===== */
+  .cat-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:20px;}
+  .cat-card{
+    border-radius:24px; padding:24px;
+    display:flex; flex-direction:column; gap:14px;
+    border:1.5px solid var(--line);
+  }
+  .cat-card.boneka{ background:linear-gradient(135deg, var(--pink-soft), white 70%);}
+  .cat-card.pengharum{ background:linear-gradient(135deg, var(--mint-soft), white 70%);}
+  .cat-top{ display:flex; align-items:center; gap:14px;}
+  .cat-icon{
+    width:54px; height:54px; border-radius:16px; background:white;
+    display:flex; align-items:center; justify-content:center; box-shadow:var(--shadow);
+    flex-shrink:0;
+  }
+  .cat-top h3{ font-size:20px;}
+  .cat-top p{ font-size:12.5px; color:var(--ink-soft); font-weight:600;}
+  .subcats{ display:flex; gap:8px; flex-wrap:wrap;}
+  .subcat-chip{
+    background:white; border:1.3px solid var(--line);
+    font-size:12.5px; font-weight:700; color:var(--ink-soft);
+    padding:8px 14px; border-radius:999px;
+  }
+
+  /* ===== Filter pills ===== */
+  .filter-row{ display:flex; gap:10px; margin-bottom:26px; flex-wrap:wrap;}
+  .pill{
+    padding:10px 20px; border-radius:999px; font-weight:700; font-size:13.5px;
+    border:1.5px solid var(--line); color:var(--ink-soft); background:white;
+  }
+  .pill.active{ background:var(--ink); color:white; border-color:var(--ink);}
+
+  /* ===== Products ===== */
+  .product-grid{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:20px;
+  }
+  .product-card{
+    border:1.5px solid var(--line); border-radius:20px; overflow:hidden;
+    display:flex; flex-direction:column;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .product-card:hover{ transform:translateY(-4px); box-shadow:var(--shadow); }
+  .product-thumb{
+    aspect-ratio:1/1; position:relative;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .thumb-1{background:var(--pink-soft);}
+  .thumb-2{background:var(--lavender-soft);}
+  .thumb-3{background:var(--mint-soft);}
+  .thumb-4{background:var(--marigold-soft);}
+  .tag{
+    position:absolute; top:12px; left:12px;
+    font-size:10.5px; font-weight:800; letter-spacing:.02em;
+    padding:5px 10px; border-radius:999px; color:white;
+  }
+  .tag.new{ background:var(--mint);}
+  .tag.hot{ background:var(--pink);}
+  .tag.pop{ background:var(--lavender);}
+  .wishlist{
+    position:absolute; top:10px; right:10px;
+    width:30px; height:30px; border-radius:50%; background:white;
+    display:flex; align-items:center; justify-content:center; box-shadow:var(--shadow);
+  }
+  .product-info{ padding:14px 16px 18px; display:flex; flex-direction:column; gap:6px;}
+  .product-sub{ font-size:11px; font-weight:700; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.03em;}
+  .product-name{ font-size:14.5px; font-weight:700; line-height:1.3;}
+  .stars{ display:flex; align-items:center; gap:4px; font-size:12px; color:var(--ink-soft); font-weight:600;}
+  .price-row{ display:flex; align-items:baseline; gap:8px; margin-top:2px;}
+  .price{ font-family:'Baloo 2'; font-weight:700; font-size:17px; color:var(--pink-dark);}
+  .price-old{ font-size:12px; color:var(--ink-soft); text-decoration:line-through;}
+  .grosir-note{ font-size:11px; color:var(--mint); font-weight:700;}
+  .add-cart{
+    margin-top:10px; width:100%; padding:10px; border-radius:12px;
+    background:var(--ink); color:white; font-weight:700; font-size:13px;
+    display:flex; align-items:center; justify-content:center; gap:6px;
+  }
+
+  /* ===== Best seller spotlight ===== */
+  .bestseller{ background:var(--ink); border-radius:28px; padding:36px; color:white;}
+  .bestseller .section-head h2, .bestseller .section-head p{ color:white;}
+  .bestseller .section-head p{ opacity:.65;}
+  .bs-row{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px;}
+  .bs-card{
+    background:rgba(255,255,255,.06);
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:18px; padding:16px; display:flex; gap:14px; align-items:center;
+  }
+  .rank{
+    font-family:'Baloo 2'; font-weight:800; font-size:26px;
+    width:44px; height:44px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  }
+  .rank.g1{ background:var(--marigold); color:var(--ink);}
+  .rank.g2{ background:#D8D8E0; color:var(--ink);}
+  .rank.g3{ background:#E3A15F; color:var(--ink);}
+  .bs-info h4{ font-size:14.5px; font-weight:700; margin-bottom:4px;}
+  .bs-info .price{ color:var(--marigold); font-size:15px;}
+  .bs-thumb{
+    width:52px; height:52px; border-radius:12px; background:rgba(255,255,255,.12);
+    display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  }
+
+  /* ===== Bundling banner ===== */
+  .bundle-banner{
+    background:linear-gradient(120deg, var(--pink) 0%, var(--pink-dark) 100%);
+    border-radius:26px; padding:36px 40px; color:white;
+    display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap;
+  }
+  .bundle-left h3{ font-size:24px; margin-bottom:8px;}
+  .bundle-left p{ font-size:14px; opacity:.9; max-width:420px;}
+  .bundle-formula{ display:flex; align-items:center; gap:14px; flex-wrap:wrap;}
+  .bundle-chip{
+    background:rgba(255,255,255,.16); border:1px solid rgba(255,255,255,.3);
+    border-radius:14px; padding:10px 16px; font-weight:700; font-size:13px;
+    display:flex; align-items:center; gap:8px;
+  }
+  .bundle-plus{ font-family:'Baloo 2'; font-size:20px; font-weight:800;}
+  .bundle-price{ text-align:right;}
+  .bundle-price .old{ text-decoration:line-through; opacity:.7; font-size:13px;}
+  .bundle-price .now{ font-family:'Baloo 2'; font-size:28px; font-weight:800;}
+
+  /* ===== Shipping / trust strip ===== */
+  .ship-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:20px;}
+  .ship-card{
+    border:1.5px solid var(--line); border-radius:20px; padding:24px;
+    display:flex; flex-direction:column; gap:12px;
+  }
+  .ship-icon{
+    width:46px; height:46px; border-radius:14px; background:var(--soft);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .ship-card h4{ font-size:15.5px; font-weight:700;}
+  .ship-card p{ font-size:13px; color:var(--ink-soft); line-height:1.5;}
+  .courier-tags{ display:flex; gap:8px; margin-top:2px;}
+  .courier-tags span{
+    font-size:11.5px; font-weight:800; padding:5px 10px; border-radius:8px;
+    background:var(--soft); color:var(--ink-soft); border:1px solid var(--line);
+  }
+
+  /* ===== Reviews ===== */
+  .review-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px;}
+  .review-card{ border:1.5px solid var(--line); border-radius:18px; padding:20px;}
+  .review-top{ display:flex; align-items:center; gap:10px; margin-bottom:10px;}
+  .avatar{ width:38px; height:38px; border-radius:50%; background:var(--lavender-soft); display:flex; align-items:center; justify-content:center; font-weight:800; color:var(--lavender); font-family:'Baloo 2';}
+  .review-name{ font-size:13.5px; font-weight:700;}
+  .review-meta{ font-size:11.5px; color:var(--ink-soft);}
+  .review-text{ font-size:13px; color:var(--ink-soft); line-height:1.6;}
+  .admin-note{
+    margin-top:10px; font-size:11px; color:var(--mint); font-weight:700;
+    display:flex; align-items:center; gap:5px;
+  }
+
+  /* ===== Footer ===== */
+  footer{ background:var(--soft); padding:52px 0 28px; margin-top:20px; border-top:1px solid var(--line);}
+  .footer-grid{ display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:32px; margin-bottom:36px;}
+  .footer-grid h5{ font-size:13px; margin-bottom:14px; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.04em;}
+  .footer-grid ul{ list-style:none; display:flex; flex-direction:column; gap:10px;}
+  .footer-grid a{ font-size:13.5px; color:var(--ink-soft); font-weight:600;}
+  .footer-grid a:hover{ color:var(--pink-dark);}
+  .footer-bottom{
+    display:flex; justify-content:space-between; align-items:center; padding-top:24px;
+    border-top:1px solid var(--line); font-size:12.5px; color:var(--ink-soft); flex-wrap:wrap; gap:10px;
+  }
+
+  /* ===== WA float ===== */
+  .wa-float{
+    position:fixed; bottom:26px; right:26px; z-index:60;
+    width:58px; height:58px; border-radius:50%;
+    background:#25D366; display:flex; align-items:center; justify-content:center;
+    box-shadow:0 12px 24px -8px rgba(37,211,102,.6);
+  }
+
+  @media(max-width:920px){
+    .hero-grid{ grid-template-columns:1fr;}
+    .hero-art{ order:-1;}
+    .product-grid{ grid-template-columns:repeat(2,1fr);}
+    .cat-grid, .ship-grid, .review-grid, .bs-row, .footer-grid{ grid-template-columns:1fr;}
+    nav.main-links, .search-box{ display:none;}
+    .hero h1{ font-size:34px;}
+  }
+</style>
+</head>
+<body>
+
+  <div class="promo-bar">🎉 Gratis ongkir min. belanja Rp150.000 <span class="dot">•</span> Voucher member baru tersedia di keranjang</div>
+
+  <header class="site">
+    <div class="wrap nav-row">
+      <a href="#" class="logo">
+        <span class="mark">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="7" cy="6" r="2.6" fill="white"/><circle cx="17" cy="6" r="2.6" fill="white"/><rect x="4.5" y="9.5" width="15" height="12" rx="6" fill="white"/><circle cx="9.3" cy="15.5" r="1.3" fill="#FF5D8F"/><circle cx="14.7" cy="15.5" r="1.3" fill="#FF5D8F"/></svg>
+        </span>
+        Ovi Toys
+      </a>
+      <nav class="main-links">
+        <a href="#kategori">Boneka</a>
+        <a href="#kategori">Pengharum</a>
+        <a href="#bestseller">Best Seller</a>
+        <a href="#compro">Tentang Kami</a>
+      </nav>
+      <div class="nav-spacer"></div>
+      <div class="search-box">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" placeholder="Cari boneka, pengharum...">
+      </div>
+      <div class="header-actions">
+        <a href="login.html" class="btn-login" style="text-decoration:none;">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.3"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>
+          Masuk
+        </a>
+        <a href="keranjang.html" class="icon-btn" style="text-decoration:none;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#241C2B" stroke-width="2.2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+          <span class="badge">3</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow">✦ Boneka &amp; Pengharum Favorit Se-Indonesia</span>
+        <h1>Teman Lucu <span class="accent">untuk Setiap</span> Momen Hangatmu</h1>
+        <p class="lead">Belanja boneka karakter, boneka custom sesuai foto, sampai pengharum ruangan kesayangan — satuan atau grosir, tinggal pilih.</p>
+        <div class="hero-ctas">
+          <a href="#produk-pilihan" class="btn-primary" style="text-decoration:none;">Belanja Sekarang</a>
+          <a href="produk.html" class="btn-secondary" style="text-decoration:none;">Request Custom by Foto</a>
+        </div>
+        <div class="trust-row">
+          <div class="trust-item">🚚 Kirim J&amp;T / JNE</div>
+          <div class="trust-item">🏬 Bisa Ambil di Toko</div>
+          <div class="trust-item">💳 Bayar Aman via Xendit</div>
+        </div>
+      </div>
+      <div class="hero-art">
+        <span class="float-tag">🔥 Best Seller Minggu Ini</span>
+        <div class="art-card pink"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#E14577" stroke-width="1.8"><circle cx="7" cy="6" r="2.4"/><circle cx="17" cy="6" r="2.4"/><rect x="4.5" y="9.5" width="15" height="11" rx="5.5"/></svg><span>Boneka Karakter</span></div>
+        <div class="art-card mint"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#1C9C81" stroke-width="1.8"><path d="M9 3h6l1 3H8l1-3Z"/><rect x="7" y="6" width="10" height="15" rx="2"/><path d="M10 11h4"/></svg><span>Pengharum Ruangan</span></div>
+        <div class="art-card marigold"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#B37E00" stroke-width="1.8"><rect x="3" y="8" width="18" height="12" rx="2"/><path d="M3 12h18"/><path d="M12 8V6a3 3 0 0 1 6 0v2"/></svg><span>Paket Bundling</span></div>
+        <div class="art-card"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#6C5FC7" stroke-width="1.8"><path d="M12 21s-7-4.5-9.5-9C.7 8.2 3 4 7 4c2 0 3.6 1.2 5 3 1.4-1.8 3-3 5-3 4 0 6.3 4.2 4.5 8-2.5 4.5-9.5 9-9.5 9Z"/></svg><span>Boneka Couple</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATEGORIES -->
+  <section class="section" id="kategori">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <h2>Belanja per Kategori</h2>
+          <p>Semakin lengkap, semakin gampang cari yang kamu mau</p>
+        </div>
+        <a href="#" class="see-all">Lihat semua kategori →</a>
+      </div>
+      <div class="cat-grid">
+        <div class="cat-card boneka">
+          <div class="cat-top">
+            <div class="cat-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#E14577" stroke-width="1.8"><circle cx="7" cy="6" r="2.4"/><circle cx="17" cy="6" r="2.4"/><rect x="4.5" y="9.5" width="15" height="11" rx="5.5"/></svg></div>
+            <div><h3>Boneka</h3><p>128 produk</p></div>
+          </div>
+          <div class="subcats">
+            <span class="subcat-chip">Boneka Karakter</span>
+            <span class="subcat-chip">Boneka Custom Foto</span>
+            <span class="subcat-chip">Boneka Mini / Gantungan</span>
+            <span class="subcat-chip">Boneka Couple</span>
+          </div>
+        </div>
+        <div class="cat-card pengharum">
+          <div class="cat-top">
+            <div class="cat-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1C9C81" stroke-width="1.8"><path d="M9 3h6l1 3H8l1-3Z"/><rect x="7" y="6" width="10" height="15" rx="2"/><path d="M10 11h4"/></svg></div>
+            <div><h3>Pengharum</h3><p>64 produk</p></div>
+          </div>
+          <div class="subcats">
+            <span class="subcat-chip">Parfum Mobil</span>
+            <span class="subcat-chip">Pengharum Ruangan</span>
+            <span class="subcat-chip">Pengharum Lemari</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCTS + FILTER -->
+  <section class="section" id="produk-pilihan">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <h2>Produk Pilihan</h2>
+          <p>Diperbarui tiap minggu, harga satuan &amp; grosir tersedia</p>
+        </div>
+      </div>
+      <div class="filter-row">
+        <button class="pill active">Semua</button>
+        <button class="pill">🔥 Populer</button>
+        <button class="pill">🆕 Produk Baru</button>
+        <button class="pill">⭐ Best Seller</button>
+      </div>
+      <div class="product-grid">
+
+        <div class="product-card" onclick="window.location.href='produk.html'" style="cursor:pointer;">
+          <div class="product-thumb thumb-1">
+            <span class="tag hot">BEST SELLER</span>
+            <span class="wishlist"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E14577" stroke-width="2"><path d="M12 21s-7-4.5-9.5-9C.7 8.2 3 4 7 4c2 0 3.6 1.2 5 3 1.4-1.8 3-3 5-3 4 0 6.3 4.2 4.5 8-2.5 4.5-9.5 9-9.5 9Z"/></svg></span>
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#E14577" stroke-width="1.6"><circle cx="7" cy="6" r="2.4"/><circle cx="17" cy="6" r="2.4"/><rect x="4.5" y="9.5" width="15" height="11" rx="5.5"/></svg>
+          </div>
+          <div class="product-info">
+            <span class="product-sub">Boneka Karakter</span>
+            <span class="product-name">Boneka Beruang Cokelat 40cm</span>
+            <span class="stars">★★★★★ 4.9 (312)</span>
+            <div class="price-row"><span class="price">Rp89.000</span><span class="price-old">Rp110.000</span></div>
+            <span class="grosir-note">Grosir mulai 12 pcs: Rp75.000/pcs</span>
+            <button class="add-cart" onclick="event.stopPropagation(); window.location.href='keranjang.html'">+ Keranjang</button>
+          </div>
+        </div>
+
+        <div class="product-card" onclick="window.location.href='produk.html'" style="cursor:pointer;">
+          <div class="product-thumb thumb-2">
+            <span class="tag pop">POPULER</span>
+            <span class="wishlist"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8B7FD1" stroke-width="2"><path d="M12 21s-7-4.5-9.5-9C.7 8.2 3 4 7 4c2 0 3.6 1.2 5 3 1.4-1.8 3-3 5-3 4 0 6.3 4.2 4.5 8-2.5 4.5-9.5 9-9.5 9Z"/></svg></span>
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#8B7FD1" stroke-width="1.6"><path d="M12 21s-7-4.5-9.5-9C.7 8.2 3 4 7 4c2 0 3.6 1.2 5 3 1.4-1.8 3-3 5-3 4 0 6.3 4.2 4.5 8-2.5 4.5-9.5 9-9.5 9Z"/></svg>
+          </div>
+          <div class="product-info">
+            <span class="product-sub">Boneka Couple</span>
+            <span class="product-name">Boneka Couple Beruang Sepasang</span>
+            <span class="stars">★★★★★ 4.8 (201)</span>
+            <div class="price-row"><span class="price">Rp135.000</span></div>
+            <span class="grosir-note">Grosir mulai 6 pcs: Rp119.000/pcs</span>
+            <button class="add-cart" onclick="event.stopPropagation(); window.location.href='keranjang.html'">+ Keranjang</button>
+          </div>
+        </div>
+
+        <div class="product-card" onclick="window.location.href='produk.html'" style="cursor:pointer;">
+          <div class="product-thumb thumb-3">
+            <span class="tag new">BARU</span>
+            <span class="wishlist"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1C9C81" stroke-width="2"><path d="M12 21s-7-4.5-9.5-9C.7 8.2 3 4 7 4c2 0 3.6 1.2 5 3 1.4-1.8 3-3 5-3 4 0 6.3 4.2 4.5 8-2.5 4.5-9.5 9-9.5 9Z"/></svg></span>
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#1C9C81" stroke-width="1.6"><path d="M9 3h6l1 3H8l1-3Z"/><rect x="7" y="6" width="10" height="15" rx="2"/><path d="M10 11h4"/></svg>
+          </div>
+          <div class="product-info">
+            <span class="product-sub">Pengharum Mobil</span>
+            <span class="product-name">Parfum Mobil Aroma Lavender</span>
+            <span class="stars">★★★★★ 4.7 (98)</span>
+            <div class="price-row"><span class="price">Rp29.000</span></div>
+            <span class="grosir-note">Grosir mulai 24 pcs: Rp22.000/pcs</span>
+            <button class="add-cart" onclick="event.stopPropagation(); window.location.href='keranjang.html'">+ Keranjang</button>
+          </div>
+        </div>
+
+        <div class="product-card" onclick="window.location.href='produk.html'" style="cursor:pointer;">
+          <div class="product-thumb thumb-4">
+            <span class="tag new">BARU</span>
+            <span class="wishlist"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#B37E00" stroke-width="2"><path d="M12 21s-7-4.5-9.5-9C.7 8.2 3 4 7 4c2 0 3.6 1.2 5 3 1.4-1.8 3-3 5-3 4 0 6.3 4.2 4.5 8-2.5 4.5-9.5 9-9.5 9Z"/></svg></span>
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#B37E00" stroke-width="1.6"><circle cx="7" cy="6" r="2.4"/><circle cx="17" cy="6" r="2.4"/><rect x="4.5" y="9.5" width="15" height="11" rx="5.5"/></svg>
+          </div>
+          <div class="product-info">
+            <span class="product-sub">Boneka Custom</span>
+            <span class="product-name">Boneka Custom Sesuai Foto Kamu</span>
+            <span class="stars">★★★★★ 5.0 (44)</span>
+            <div class="price-row"><span class="price">Rp165.000</span></div>
+            <span class="grosir-note">Upload foto saat checkout</span>
+            <button class="add-cart" onclick="event.stopPropagation(); window.location.href='keranjang.html'">+ Keranjang</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- BEST SELLER SPOTLIGHT -->
+  <section class="section" id="bestseller">
+    <div class="wrap">
+      <div class="bestseller">
+        <div class="section-head">
+          <div>
+            <h2>⭐ Best Seller Bulan Ini</h2>
+            <p>Paling laris berdasarkan penjualan online &amp; toko</p>
+          </div>
+          <a href="#" class="see-all" style="color:var(--marigold);">Lihat semua →</a>
+        </div>
+        <div class="bs-row">
+          <div class="bs-card">
+            <div class="rank g1">1</div>
+            <div class="bs-thumb"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.6"><circle cx="7" cy="6" r="2.4"/><circle cx="17" cy="6" r="2.4"/><rect x="4.5" y="9.5" width="15" height="11" rx="5.5"/></svg></div>
+            <div class="bs-info"><h4>Boneka Beruang Cokelat 40cm</h4><span class="price">Rp89.000</span></div>
+          </div>
+          <div class="bs-card">
+            <div class="rank g2">2</div>
+            <div class="bs-thumb"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.6"><path d="M9 3h6l1 3H8l1-3Z"/><rect x="7" y="6" width="10" height="15" rx="2"/></svg></div>
+            <div class="bs-info"><h4>Pengharum Ruangan Vanilla</h4><span class="price">Rp35.000</span></div>
+          </div>
+          <div class="bs-card">
+            <div class="rank g3">3</div>
+            <div class="bs-thumb"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.6"><path d="M12 21s-7-4.5-9.5-9C.7 8.2 3 4 7 4c2 0 3.6 1.2 5 3 1.4-1.8 3-3 5-3 4 0 6.3 4.2 4.5 8-2.5 4.5-9.5 9-9.5 9Z"/></svg></div>
+            <div class="bs-info"><h4>Boneka Couple Sepasang</h4><span class="price">Rp135.000</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BUNDLE -->
+  <section class="section" style="padding-top:0;">
+    <div class="wrap">
+      <div class="bundle-banner">
+        <div class="bundle-left">
+          <h3>🎁 Paket Hemat Bestie</h3>
+          <p>Beli boneka + pengharum ruangan sekaligus, lebih hemat dibanding beli satuan.</p>
+          <div class="bundle-formula" style="margin-top:16px;">
+            <div class="bundle-chip">🧸 Boneka Beruang 40cm</div>
+            <span class="bundle-plus">+</span>
+            <div class="bundle-chip">🌸 Pengharum Vanilla</div>
+          </div>
+        </div>
+        <div class="bundle-price">
+          <div class="old">Rp124.000</div>
+          <div class="now">Rp99.000</div>
+          <a href="keranjang.html" class="btn-secondary" style="margin-top:10px; text-decoration:none; display:inline-block;">Ambil Paket Ini</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPANY PROFILE / COMPRO AT HOME -->
+  <section class="section" id="compro">
+    <div class="wrap">
+      <div style="background:var(--soft); border-radius:28px; padding:44px; display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:center;">
+        <div>
+          <span class="eyebrow">✦ Kenalan Sama Kami</span>
+          <h2 style="font-size:28px; margin-bottom:14px;">Ovi Toys, Teman Belanja Boneka Sejak 2021</h2>
+          <p style="font-size:14.5px; color:var(--ink-soft); line-height:1.7; max-width:480px; margin-bottom:22px;">
+            Berawal dari toko kecil, kini Ovi Toys jadi tempat belanja boneka dan pengharum favorit ribuan pelanggan — mulai dari koleksi pribadi, hadiah, sampai stok reseller. Semua produk dipilih langsung supaya kualitasnya tetap terjaga.
+          </p>
+          <div style="display:flex; gap:28px; margin-bottom:24px; flex-wrap:wrap;">
+            <div><div style="font-family:'Baloo 2'; font-size:24px; font-weight:800; color:var(--pink-dark);">50rb+</div><div style="font-size:12px; color:var(--ink-soft); font-weight:600;">Pesanan Terkirim</div></div>
+            <div><div style="font-family:'Baloo 2'; font-size:24px; font-weight:800; color:var(--pink-dark);">4.9★</div><div style="font-size:12px; color:var(--ink-soft); font-weight:600;">Rating Toko</div></div>
+            <div><div style="font-family:'Baloo 2'; font-size:24px; font-weight:800; color:var(--pink-dark);">250+</div><div style="font-size:12px; color:var(--ink-soft); font-weight:600;">Produk Tersedia</div></div>
+          </div>
+          <div style="display:flex; gap:12px; flex-wrap:wrap;">
+            <a href="#compro" class="btn-primary" style="padding:13px 22px; text-decoration:none;">Lihat Lokasi Toko</a>
+            <a href="https://wa.me/6281234567890" target="_blank" class="btn-secondary" style="padding:13px 22px; text-decoration:none;">Chat Admin</a>
+          </div>
+        </div>
+        <div style="background:white; border-radius:22px; padding:24px; border:1.5px solid var(--line); box-shadow:var(--shadow);">
+          <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px;">
+            <div style="width:44px; height:44px; border-radius:12px; background:var(--mint-soft); display:flex; align-items:center; justify-content:center;">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1C9C81" stroke-width="1.8"><path d="M12 21s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12Z"/><circle cx="12" cy="9" r="2.6"/></svg>
+            </div>
+            <div><div style="font-weight:700; font-size:14px;">Toko Ovi Toys</div><div style="font-size:12px; color:var(--ink-soft);">Buka setiap hari, 09.00–20.00</div></div>
+          </div>
+          <div style="aspect-ratio:16/9; background:var(--lavender-soft); border-radius:14px; display:flex; align-items:center; justify-content:center; margin-bottom:16px;">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#8B7FD1" stroke-width="1.6"><path d="M9 20l-5.5 2V6L9 4l6 2 5.5-2v16L15 22l-6-2Z"/><path d="M9 4v16M15 6v16"/></svg>
+          </div>
+          <p style="font-size:12.5px; color:var(--ink-soft); line-height:1.6;">📍 Jl. Contoh Raya No. 10, Jakarta — bisa kirim via ekspedisi atau ambil langsung di toko.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SHIPPING / TRUST -->
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <h2>Pengiriman &amp; Pembayaran</h2>
+          <p>Fleksibel sesuai kebutuhan kamu</p>
+        </div>
+      </div>
+      <div class="ship-grid">
+        <div class="ship-card">
+          <div class="ship-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#E14577" stroke-width="1.8"><path d="M3 7h11v9H3z"/><path d="M14 11h4l3 3v2h-7z"/><circle cx="7" cy="18" r="1.6"/><circle cx="18" cy="18" r="1.6"/></svg></div>
+          <h4>Kirim via Ekspedisi</h4>
+          <p>Ongkir dihitung otomatis sesuai alamat tujuan kamu.</p>
+          <div class="courier-tags"><span>J&amp;T</span><span>JNE</span></div>
+        </div>
+        <div class="ship-card">
+          <div class="ship-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1C9C81" stroke-width="1.8"><path d="M12 21s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12Z"/><circle cx="12" cy="9" r="2.6"/></svg></div>
+          <h4>Ambil di Toko</h4>
+          <p>Jl. Contoh Raya No. 10, Jakarta — bisa lihat lokasi di peta.</p>
+          <div class="courier-tags"><span>Gratis</span><span>Same Day</span></div>
+        </div>
+        <div class="ship-card">
+          <div class="ship-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#8B7FD1" stroke-width="1.8"><rect x="2" y="5" width="20" height="14" rx="2.5"/><path d="M2 10h20"/></svg></div>
+          <h4>Bayar Aman</h4>
+          <p>Transfer, e-wallet, QRIS — diproses lewat payment gateway terpercaya.</p>
+          <div class="courier-tags"><span>Powered by Xendit</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <h2>Kata Pelanggan</h2>
+          <p>Ulasan asli, ditinjau oleh tim admin sebelum tayang</p>
+        </div>
+      </div>
+      <div class="review-grid">
+        <div class="review-card">
+          <div class="review-top">
+            <div class="avatar">R</div>
+            <div><div class="review-name">Rani A.</div><div class="review-meta">Boneka Custom Foto</div></div>
+          </div>
+          <span class="stars">★★★★★</span>
+          <p class="review-text">Hasilnya mirip banget sama foto kucingku, bahannya juga lembut. Pengiriman rapi!</p>
+          <div class="admin-note">✓ Ditinjau admin</div>
+        </div>
+        <div class="review-card">
+          <div class="review-top">
+            <div class="avatar">D</div>
+            <div><div class="review-name">Dimas P.</div><div class="review-meta">Paket Bundling</div></div>
+          </div>
+          <span class="stars">★★★★★</span>
+          <p class="review-text">Beli paket bundling buat kado, lebih murah daripada beli satuan. Wanginya awet.</p>
+          <div class="admin-note">✓ Ditinjau admin</div>
+        </div>
+        <div class="review-card">
+          <div class="review-top">
+            <div class="avatar">S</div>
+            <div><div class="review-name">Siti M.</div><div class="review-meta">Order Grosir</div></div>
+          </div>
+          <span class="stars">★★★★★</span>
+          <p class="review-text">Order grosir buat dijual lagi, adminnya fast response di WhatsApp buat nego harga.</p>
+          <div class="admin-note">✓ Ditinjau admin</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="wrap">
+      <div class="footer-grid">
+        <div>
+          <a href="#" class="logo" style="margin-bottom:12px;">
+            <span class="mark" style="width:34px;height:34px;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="7" cy="6" r="2.6" fill="white"/><circle cx="17" cy="6" r="2.6" fill="white"/><rect x="4.5" y="9.5" width="15" height="12" rx="6" fill="white"/></svg>
+            </span>
+            Ovi Toys
+          </a>
+          <p style="font-size:13px; color:var(--ink-soft); line-height:1.6; max-width:260px;">Toko boneka &amp; pengharum online — teman lucu untuk hadiah, koleksi, dan usaha reseller kamu.</p>
+        </div>
+        <div>
+          <h5>Belanja</h5>
+          <ul>
+            <li><a href="#">Boneka</a></li>
+            <li><a href="#">Pengharum</a></li>
+            <li><a href="#">Best Seller</a></li>
+            <li><a href="#">Grosir &amp; PO</a></li>
+          </ul>
+        </div>
+        <div>
+          <h5>Bantuan</h5>
+          <ul>
+            <li><a href="#">Lacak Pesanan</a></li>
+            <li><a href="#">Voucher &amp; Promo</a></li>
+            <li><a href="#">Kebijakan Pengiriman</a></li>
+            <li><a href="#">Hubungi Admin</a></li>
+          </ul>
+        </div>
+        <div>
+          <h5>Tentang Kami</h5>
+          <ul>
+            <li><a href="#">Profil Toko</a></li>
+            <li><a href="#">Lokasi Toko</a></li>
+            <li><a href="#">WhatsApp Admin</a></li>
+            <li><a href="#">ovitoys.id</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 Ovi Toys. Semua hak dilindungi.</span>
+        <span style="display:flex; gap:16px; align-items:center;">
+          <a href="status-pesanan.html">Lacak Pesanan</a>
+          <a href="admin.html">Admin</a>
+          <span>ovitoys.id</span>
+        </span>
+      </div>
+    </div>
+  </footer>
+
+  <a href="https://wa.me/6281234567890" target="_blank" class="wa-float">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2Zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 20Zm4.4-5.9c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.5.1-.2.2-.6.8-.8 1-.1.1-.3.2-.5.1-.2-.1-1-.4-1.9-1.2-.7-.6-1.2-1.4-1.3-1.6-.1-.2 0-.4.1-.5l.4-.4c.1-.1.2-.3.2-.4.1-.1 0-.3 0-.4-.1-.1-.5-1.2-.7-1.7-.2-.4-.4-.4-.5-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 1.9s.8 2.2.9 2.4c.1.1 1.6 2.5 4 3.4.6.2 1 .4 1.3.5.6.2 1 .1 1.4-.1.4-.2 1.2-.8 1.4-1.3.2-.4.2-.8.1-.9-.1-.1-.2-.2-.4-.3Z"/></svg>
+  </a>
+
+  <script>
+    document.querySelectorAll('.pill').forEach(p=>{
+      p.addEventListener('click', ()=>{
+        document.querySelectorAll('.pill').forEach(x=>x.classList.remove('active'));
+        p.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>

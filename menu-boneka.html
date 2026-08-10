@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ovi Toys — Mockup Dropdown Menu Boneka</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --white:#FFFFFF; --soft:#FFF7F2; --ink:#241C2B; --ink-soft:#6B6070;
+    --pink:#FF5D8F; --pink-dark:#E14577; --marigold:#FFB000; --mint:#22B996;
+    --mint-soft:#E3FAF3; --lavender:#8B7FD1; --lavender-soft:#F1EEFC;
+    --line:#F0E6E0; --pink-soft:#FFE9F0; --marigold-soft:#FFF3D9;
+    --shadow: 0 20px 45px -14px rgba(36,28,43,0.22);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{ font-family:'Plus Jakarta Sans', sans-serif; color:var(--ink); background:var(--white); -webkit-font-smoothing:antialiased;}
+  h1,h2,h3{ font-family:'Baloo 2', sans-serif; font-weight:700;}
+  a{color:inherit; text-decoration:none;}
+  button{font-family:inherit; cursor:pointer; border:none; background:none;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 24px;}
+
+  /* ===== Header (reused) ===== */
+  header.site{ position:relative; z-index:60; background:var(--white); border-bottom:1px solid var(--line);}
+  .nav-row{ display:flex; align-items:center; gap:28px; padding:16px 24px;}
+  .logo{ display:flex; align-items:center; gap:10px; font-family:'Baloo 2'; font-weight:800; font-size:22px;}
+  .logo .mark{ width:40px; height:40px; border-radius:12px; background:var(--pink); display:flex; align-items:center; justify-content:center;}
+  nav.main-links{ display:flex; gap:26px; font-weight:600; font-size:14.5px; color:var(--ink-soft);}
+  .nav-item{ position:relative; display:flex; align-items:center; gap:5px; padding:8px 0; cursor:pointer;}
+  .nav-item svg.chev{ transition:transform .18s ease;}
+  .nav-item.open{ color:var(--pink-dark);}
+  .nav-item.open svg.chev{ transform:rotate(180deg);}
+  .nav-item.open::after{ content:""; position:absolute; left:0; right:0; bottom:-17px; height:3px; background:var(--pink); border-radius:3px;}
+  .nav-spacer{flex:1;}
+  .search-box{ display:flex; align-items:center; gap:8px; background:var(--soft); border:1.5px solid var(--line); border-radius:999px; padding:9px 16px; width:260px; color:var(--ink-soft); font-size:13.5px;}
+  .search-box input{ border:none; background:none; outline:none; font:inherit; color:var(--ink); width:100%;}
+  .icon-btn{ position:relative; width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:var(--soft); flex-shrink:0;}
+  .icon-btn .badge{ position:absolute; top:-3px; right:-3px; background:var(--pink); color:white; font-size:10px; font-weight:800; width:17px; height:17px; border-radius:50%; display:flex; align-items:center; justify-content:center; border:2px solid white;}
+  .header-actions{display:flex; align-items:center; gap:10px;}
+  .btn-login{ display:flex; align-items:center; gap:8px; font-weight:700; font-size:13.5px; padding:9px 16px; border-radius:999px; background:var(--ink); color:white;}
+
+  /* ===== Mega menu ===== */
+  .backdrop{
+    position:fixed; inset:0; background:rgba(36,28,43,.28); backdrop-filter:blur(1px);
+    opacity:0; pointer-events:none; transition:opacity .2s ease; z-index:40;
+  }
+  .backdrop.show{ opacity:1; pointer-events:auto;}
+
+  .mega-panel{
+    background:white; border-bottom:1px solid var(--line);
+    box-shadow:var(--shadow);
+    display:none;
+  }
+  .mega-panel.show{ display:block;}
+
+  .mega-grid{ display:grid; grid-template-columns:230px 1fr 220px; gap:36px; padding:32px 24px 34px;}
+
+  .mega-col-title{ font-size:11.5px; font-weight:800; text-transform:uppercase; letter-spacing:.04em; color:var(--ink-soft); margin-bottom:16px;}
+
+  .subcat-list{ display:flex; flex-direction:column; gap:4px;}
+  .subcat-item{ display:flex; align-items:center; justify-content:space-between; padding:11px 12px; border-radius:12px; font-size:13.5px; font-weight:700; color:var(--ink);}
+  .subcat-item:hover{ background:var(--pink-soft); color:var(--pink-dark);}
+  .subcat-item.active{ background:var(--pink-soft); color:var(--pink-dark);}
+  .subcat-item .count{ font-size:11px; font-weight:700; color:var(--ink-soft);}
+  .subcat-item.active .count{ color:var(--pink-dark);}
+  .subcat-all{ margin-top:10px; padding-top:14px; border-top:1px solid var(--line);}
+  .subcat-all a{ font-size:12.5px; font-weight:800; color:var(--pink-dark); display:flex; align-items:center; gap:5px;}
+
+  .mega-products{ display:grid; grid-template-columns:repeat(4,1fr); gap:16px;}
+  .mega-product{ display:flex; flex-direction:column; gap:10px;}
+  .mega-thumb{ aspect-ratio:1/1; border-radius:16px; display:flex; align-items:center; justify-content:center; position:relative; border:1.5px solid var(--line);}
+  .mega-thumb.p1{background:var(--pink-soft);} .mega-thumb.p2{background:var(--lavender-soft);} .mega-thumb.p3{background:var(--mint-soft);} .mega-thumb.p4{background:var(--marigold-soft);}
+  .mega-tag{ position:absolute; top:8px; left:8px; font-size:9.5px; font-weight:800; padding:4px 8px; border-radius:999px; color:white;}
+  .mega-tag.hot{background:var(--pink);} .mega-tag.new{background:var(--mint);}
+  .mega-pname{ font-size:12.5px; font-weight:700; line-height:1.35;}
+  .mega-pprice{ font-family:'Baloo 2'; font-weight:700; font-size:13.5px; color:var(--pink-dark);}
+
+  .mega-promo{
+    background:linear-gradient(160deg, var(--pink) 0%, var(--pink-dark) 100%);
+    border-radius:20px; padding:22px; color:white; display:flex; flex-direction:column; justify-content:space-between; min-height:230px;
+  }
+  .mega-promo h4{ font-size:16.5px; line-height:1.3; margin-bottom:8px;}
+  .mega-promo p{ font-size:12px; opacity:.9; line-height:1.5; margin-bottom:14px;}
+  .mega-promo button{ background:white; color:var(--pink-dark); font-weight:800; font-size:12.5px; padding:10px 16px; border-radius:999px; align-self:flex-start;}
+  .mega-promo .icon{ width:44px; height:44px; border-radius:12px; background:rgba(255,255,255,.18); display:flex; align-items:center; justify-content:center; margin-bottom:14px;}
+
+  /* page content behind, just for context */
+  .hero-peek{ background:var(--soft); padding:64px 0 90px;}
+  .hero-peek h1{ font-size:38px; max-width:600px; line-height:1.2; margin-bottom:14px;}
+  .hero-peek p{ color:var(--ink-soft); font-size:15px; max-width:480px;}
+  .hint{
+    max-width:1180px; margin:26px auto 0; padding:14px 20px; background:var(--mint-soft);
+    border:1.3px dashed var(--mint); border-radius:14px; font-size:12.5px; font-weight:700; color:#127A5F;
+    display:flex; align-items:center; gap:8px;
+  }
+
+  @media(max-width:960px){
+    nav.main-links, .search-box{ display:none;}
+    .mega-grid{ grid-template-columns:1fr; }
+    .mega-products{ grid-template-columns:repeat(2,1fr);}
+  }
+</style>
+</head>
+<body>
+
+  <div class="backdrop" id="backdrop"></div>
+
+  <header class="site">
+    <div class="wrap nav-row">
+      <a href="index.html" class="logo">
+        <span class="mark"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="7" cy="6" r="2.6" fill="white"/><circle cx="17" cy="6" r="2.6" fill="white"/><rect x="4.5" y="9.5" width="15" height="12" rx="6" fill="white"/></svg></span>
+        Ovi Toys
+      </a>
+      <nav class="main-links">
+        <div class="nav-item open" id="navBoneka">
+          Boneka
+          <svg class="chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+        </div>
+        <div class="nav-item"><a href="#">Pengharum</a></div>
+        <div class="nav-item"><a href="#">Best Seller</a></div>
+        <div class="nav-item"><a href="#">Tentang Kami</a></div>
+      </nav>
+      <div class="nav-spacer"></div>
+      <div class="search-box">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" placeholder="Cari boneka, pengharum...">
+      </div>
+      <div class="header-actions">
+        <button class="btn-login"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.3"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>Masuk</button>
+        <button class="icon-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#241C2B" stroke-width="2.2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg><span class="badge">3</span></button>
+      </div>
+    </div>
+
+    <!-- MEGA MENU PANEL -->
+    <div class="mega-panel show" id="megaPanel">
+      <div class="wrap mega-grid">
+
+        <!-- SUBCATEGORIES -->
+        <div>
+          <div class="mega-col-title">Kategori Boneka</div>
+          <div class="subcat-list">
+            <a class="subcat-item active">Semua Boneka <span class="count">128</span></a>
+            <a class="subcat-item">Boneka Karakter <span class="count">62</span></a>
+            <a class="subcat-item">Boneka Custom Foto <span class="count">18</span></a>
+            <a class="subcat-item">Boneka Mini / Gantungan <span class="count">30</span></a>
+            <a class="subcat-item">Boneka Couple <span class="count">18</span></a>
+          </div>
+          <div class="subcat-all">
+            <a href="#">Lihat Semua Kategori →</a>
+          </div>
+        </div>
+
+        <!-- FEATURED PRODUCTS -->
+        <div>
+          <div class="mega-col-title">Produk Populer di Boneka</div>
+          <div class="mega-products">
+            <div class="mega-product">
+              <div class="mega-thumb p1">
+                <span class="mega-tag hot">BEST SELLER</span>
+                <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#E14577" stroke-width="1.6"><circle cx="7" cy="6" r="2.4"/><circle cx="17" cy="6" r="2.4"/><rect x="4.5" y="9.5" width="15" height="11" rx="5.5"/></svg>
+              </div>
+              <div class="mega-pname">Boneka Beruang Cokelat 40cm</div>
+              <div class="mega-pprice">Rp89.000</div>
+            </div>
+            <div class="mega-product">
+              <div class="mega-thumb p2">
+                <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#8B7FD1" stroke-width="1.6"><path d="M12 21s-7-4.5-9.5-9C.7 8.2 3 4 7 4c2 0 3.6 1.2 5 3 1.4-1.8 3-3 5-3 4 0 6.3 4.2 4.5 8-2.5 4.5-9.5 9-9.5 9Z"/></svg>
+              </div>
+              <div class="mega-pname">Boneka Couple Sepasang</div>
+              <div class="mega-pprice">Rp135.000</div>
+            </div>
+            <div class="mega-product">
+              <div class="mega-thumb p4">
+                <span class="mega-tag new">BARU</span>
+                <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#B37E00" stroke-width="1.6"><circle cx="7" cy="6" r="2.4"/><circle cx="17" cy="6" r="2.4"/><rect x="4.5" y="9.5" width="15" height="11" rx="5.5"/></svg>
+              </div>
+              <div class="mega-pname">Boneka Custom Sesuai Foto</div>
+              <div class="mega-pprice">Rp165.000</div>
+            </div>
+            <div class="mega-product">
+              <div class="mega-thumb p3">
+                <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#1C9C81" stroke-width="1.6"><circle cx="7" cy="6" r="2.4"/><circle cx="17" cy="6" r="2.4"/><rect x="4.5" y="9.5" width="15" height="11" rx="5.5"/></svg>
+              </div>
+              <div class="mega-pname">Gantungan Boneka Mini</div>
+              <div class="mega-pprice">Rp19.000</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PROMO -->
+        <div class="mega-promo">
+          <div>
+            <div class="icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8"><rect x="3" y="6" width="18" height="14" rx="2"/><circle cx="12" cy="13" r="3.5"/><path d="M8 6l1.5-2h5L16 6"/></svg>
+            </div>
+            <h4>Boneka Custom Sesuai Fotomu 📷</h4>
+            <p>Upload foto favoritmu, kami wujudkan jadi boneka. Cocok buat kado spesial.</p>
+          </div>
+          <button>Buat Sekarang</button>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- page context behind menu -->
+  <section class="hero-peek">
+    <div class="wrap">
+      <h1>Teman Lucu untuk Setiap Momen Hangatmu</h1>
+      <p>Klik "Boneka" di menu atas untuk lihat semua kategori dan produk populer tanpa perlu pindah halaman.</p>
+    </div>
+  </section>
+  <div class="hint">💡 Ini simulasi tampilan saat customer klik "Boneka" di header — coba klik lagi menunya untuk buka/tutup.</div>
+
+  <script>
+    const navBoneka = document.getElementById('navBoneka');
+    const megaPanel = document.getElementById('megaPanel');
+    const backdrop = document.getElementById('backdrop');
+
+    function toggleMenu(){
+      const isOpen = megaPanel.classList.toggle('show');
+      navBoneka.classList.toggle('open', isOpen);
+      backdrop.classList.toggle('show', isOpen);
+    }
+    navBoneka.addEventListener('click', toggleMenu);
+    backdrop.addEventListener('click', toggleMenu);
+
+    document.querySelectorAll('.subcat-item').forEach(item=>{
+      item.addEventListener('click', ()=>{
+        document.querySelectorAll('.subcat-item').forEach(x=>x.classList.remove('active'));
+        item.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>

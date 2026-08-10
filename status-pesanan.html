@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ovi Toys — Mockup Status Pesanan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --white:#FFFFFF; --soft:#FFF7F2; --ink:#241C2B; --ink-soft:#6B6070;
+    --pink:#FF5D8F; --pink-dark:#E14577; --marigold:#FFB000; --mint:#22B996;
+    --mint-soft:#E3FAF3; --lavender:#8B7FD1; --lavender-soft:#F1EEFC;
+    --line:#F0E6E0; --pink-soft:#FFE9F0; --marigold-soft:#FFF3D9;
+    --shadow: 0 10px 30px -12px rgba(36,28,43,0.15);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{ font-family:'Plus Jakarta Sans', sans-serif; color:var(--ink); background:var(--white); -webkit-font-smoothing:antialiased;}
+  h1,h2,h3{ font-family:'Baloo 2', sans-serif; font-weight:700;}
+  a{color:inherit; text-decoration:none;}
+  button{font-family:inherit; cursor:pointer; border:none; background:none;}
+  .wrap{max-width:1080px; margin:0 auto; padding:0 24px;}
+
+  header.site{ position:sticky; top:0; z-index:50; background:var(--white); border-bottom:1px solid var(--line);}
+  .nav-row{ display:flex; align-items:center; gap:20px; padding:16px 24px;}
+  .logo{ display:flex; align-items:center; gap:10px; font-family:'Baloo 2'; font-weight:800; font-size:20px;}
+  .logo .mark{ width:38px; height:38px; border-radius:11px; background:var(--pink); display:flex; align-items:center; justify-content:center;}
+  .nav-spacer{flex:1;}
+  .icon-btn{ width:38px; height:38px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:var(--soft);}
+  .btn-login{ display:flex; align-items:center; gap:8px; font-weight:700; font-size:13px; padding:8px 15px; border-radius:999px; background:var(--ink); color:white;}
+
+  .page-head{ padding:28px 0 6px;}
+  .page-head h1{ font-size:24px; margin-bottom:4px;}
+  .page-head p{ font-size:13.5px; color:var(--ink-soft);}
+
+  /* order list filter */
+  .order-tabs{ display:flex; gap:8px; margin:20px 0 18px; flex-wrap:wrap;}
+  .order-tab{ padding:9px 18px; border-radius:999px; font-weight:700; font-size:12.5px; border:1.5px solid var(--line); color:var(--ink-soft);}
+  .order-tab.active{ background:var(--ink); color:white; border-color:var(--ink);}
+
+  .order-mini-list{ display:flex; flex-direction:column; gap:10px; margin-bottom:36px;}
+  .order-mini-card{ display:flex; align-items:center; gap:14px; border:1.5px solid var(--line); border-radius:16px; padding:14px 18px; cursor:pointer;}
+  .order-mini-card.selected{ border-color:var(--pink); background:var(--pink-soft);}
+  .order-mini-thumb{ width:44px; height:44px; border-radius:12px; background:var(--soft); display:flex; align-items:center; justify-content:center; flex-shrink:0;}
+  .order-mini-card.selected .order-mini-thumb{ background:white;}
+  .order-mini-info{ flex:1;}
+  .order-mini-id{ font-size:13px; font-weight:800;}
+  .order-mini-meta{ font-size:11.5px; color:var(--ink-soft); margin-top:2px;}
+  .order-mini-status{ font-size:10.5px; font-weight:800; padding:5px 10px; border-radius:999px; white-space:nowrap;}
+  .order-mini-status.shipping{ background:var(--marigold-soft); color:#8A6300;}
+  .order-mini-status.done{ background:var(--mint-soft); color:#127A5F;}
+  .order-mini-status.processing{ background:var(--lavender-soft); color:var(--lavender);}
+  .order-mini-total{ font-size:13px; font-weight:800; color:var(--pink-dark); font-family:'Baloo 2'; white-space:nowrap;}
+
+  /* detail section */
+  .detail-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:18px; flex-wrap:wrap; gap:10px;}
+  .detail-head h2{ font-size:19px;}
+  .detail-head .oid{ font-size:12.5px; color:var(--ink-soft); margin-top:2px;}
+  .status-chip{ display:inline-flex; align-items:center; gap:6px; background:var(--marigold-soft); color:#8A6300; font-size:12px; font-weight:800; padding:7px 14px; border-radius:999px;}
+
+  .card{ background:white; border:1.5px solid var(--line); border-radius:20px; padding:24px; margin-bottom:18px;}
+
+  /* tracking timeline */
+  .timeline{ display:flex; flex-direction:column;}
+  .t-step{ display:flex; gap:16px; position:relative;}
+  .t-step .t-line{ position:absolute; left:15px; top:32px; bottom:-4px; width:2px; background:var(--line);}
+  .t-step:last-child .t-line{ display:none;}
+  .t-step.done .t-line{ background:var(--mint);}
+  .t-dot{ width:32px; height:32px; border-radius:50%; background:var(--soft); border:2px solid var(--line); display:flex; align-items:center; justify-content:center; flex-shrink:0; z-index:1;}
+  .t-step.done .t-dot{ background:var(--mint); border-color:var(--mint);}
+  .t-step.active .t-dot{ background:var(--pink); border-color:var(--pink);}
+  .t-body{ flex:1; padding-bottom:28px;}
+  .t-step:last-child .t-body{ padding-bottom:0;}
+  .t-title{ font-size:14px; font-weight:700;}
+  .t-step:not(.done):not(.active) .t-title{ color:var(--ink-soft);}
+  .t-time{ font-size:11.5px; color:var(--ink-soft); margin-top:2px;}
+  .t-extra{ margin-top:10px; background:var(--soft); border-radius:12px; padding:12px 14px; font-size:12.5px; display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;}
+  .t-extra .resi{ font-weight:800; font-family:'Baloo 2'; letter-spacing:.02em;}
+  .t-extra button{ background:var(--ink); color:white; font-weight:700; font-size:11.5px; padding:7px 13px; border-radius:8px; white-space:nowrap;}
+
+  .row2{ display:grid; grid-template-columns:1fr 1fr; gap:18px;}
+  .mini-label{ font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:.03em; color:var(--ink-soft); margin-bottom:8px;}
+  .addr-text{ font-size:13px; color:var(--ink-soft); line-height:1.6;}
+  .addr-name{ font-weight:700; font-size:13.5px; margin-bottom:4px; color:var(--ink);}
+
+  .item-row{ display:flex; gap:14px; padding:14px 0; border-top:1px solid var(--line);}
+  .item-row:first-child{ border-top:none; padding-top:0;}
+  .item-thumb{ width:56px; height:56px; border-radius:12px; background:var(--pink-soft); display:flex; align-items:center; justify-content:center; flex-shrink:0;}
+  .item-info{ flex:1;}
+  .item-name{ font-size:13.5px; font-weight:700;}
+  .item-meta{ font-size:11.5px; color:var(--ink-soft); margin-top:2px;}
+  .item-price{ font-size:13px; font-weight:700; align-self:center;}
+  .total-row{ display:flex; justify-content:space-between; padding-top:14px; margin-top:6px; border-top:1.5px solid var(--line); font-weight:800; font-size:15px;}
+  .total-row .amt{ color:var(--pink-dark); font-family:'Baloo 2';}
+
+  .btn-row{ display:flex; gap:12px; margin-top:4px;}
+  .btn-primary{ flex:1; background:var(--pink); color:white; font-weight:800; font-size:13.5px; padding:14px; border-radius:14px; box-shadow:var(--shadow);}
+  .btn-secondary{ flex:1; background:white; color:var(--ink); font-weight:700; font-size:13.5px; padding:14px; border-radius:14px; border:1.5px solid var(--line);}
+
+  @media(max-width:800px){
+    .row2{ grid-template-columns:1fr;}
+    .order-mini-card{ flex-wrap:wrap;}
+  }
+</style>
+</head>
+<body>
+
+  <header class="site">
+    <div class="wrap nav-row">
+      <a href="index.html" class="logo">
+        <span class="mark"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="7" cy="6" r="2.6" fill="white"/><circle cx="17" cy="6" r="2.6" fill="white"/><rect x="4.5" y="9.5" width="15" height="12" rx="6" fill="white"/></svg></span>
+        Ovi Toys
+      </a>
+      <div class="nav-spacer"></div>
+      <a href="index.html" class="btn-login" style="text-decoration:none;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.3"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>Rani A.</a>
+      <a href="keranjang.html" class="icon-btn" style="text-decoration:none;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#241C2B" stroke-width="2.2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></a>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <div class="page-head">
+      <h1>Pesanan Saya</h1>
+      <p>Pantau status dan lacak pengiriman pesanan kamu di sini</p>
+    </div>
+
+    <div class="order-tabs">
+      <div class="order-tab active">Semua</div>
+      <div class="order-tab">Diproses</div>
+      <div class="order-tab">Dikirim</div>
+      <div class="order-tab">Selesai</div>
+    </div>
+
+    <div class="order-mini-list">
+      <div class="order-mini-card selected">
+        <div class="order-mini-thumb"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E14577" stroke-width="1.6"><circle cx="7" cy="6" r="2.4"/><circle cx="17" cy="6" r="2.4"/><rect x="4.5" y="9.5" width="15" height="11" rx="5.5"/></svg></div>
+        <div class="order-mini-info">
+          <div class="order-mini-id">#OVI1043 · 2 produk</div>
+          <div class="order-mini-meta">7 Agustus 2026 · Boneka Beruang 40cm, +1 lainnya</div>
+        </div>
+        <span class="order-mini-status shipping">Dikirim</span>
+        <span class="order-mini-total">Rp254.000</span>
+      </div>
+
+      <div class="order-mini-card">
+        <div class="order-mini-thumb"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8B7FD1" stroke-width="1.6"><path d="M12 21s-7-4.5-9.5-9C.7 8.2 3 4 7 4c2 0 3.6 1.2 5 3 1.4-1.8 3-3 5-3 4 0 6.3 4.2 4.5 8-2.5 4.5-9.5 9-9.5 9Z"/></svg></div>
+        <div class="order-mini-info">
+          <div class="order-mini-id">#OVI1038 · 1 produk</div>
+          <div class="order-mini-meta">2 Agustus 2026 · Boneka Couple Sepasang</div>
+        </div>
+        <span class="order-mini-status done">Selesai</span>
+        <span class="order-mini-total">Rp135.000</span>
+      </div>
+
+      <div class="order-mini-card">
+        <div class="order-mini-thumb"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1C9C81" stroke-width="1.6"><path d="M9 3h6l1 3H8l1-3Z"/><rect x="7" y="6" width="10" height="15" rx="2"/></svg></div>
+        <div class="order-mini-info">
+          <div class="order-mini-id">#OVI1030 · 3 produk</div>
+          <div class="order-mini-meta">28 Juli 2026 · Pengharum Ruangan Vanilla, +2 lainnya</div>
+        </div>
+        <span class="order-mini-status processing">Diproses</span>
+        <span class="order-mini-total">Rp142.000</span>
+      </div>
+    </div>
+
+    <!-- DETAIL FOR SELECTED ORDER -->
+    <div class="detail-head">
+      <div><h2>Detail Pesanan #OVI1043</h2><div class="oid">Dipesan 7 Agustus 2026, 14:32 WIB</div></div>
+      <span class="status-chip">🚚 Sedang Dikirim</span>
+    </div>
+
+    <div class="card">
+      <div class="timeline">
+        <div class="t-step done">
+          <div class="t-line"></div>
+          <div class="t-dot"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></div>
+          <div class="t-body">
+            <div class="t-title">Pesanan Dibuat</div>
+            <div class="t-time">7 Agustus 2026, 14:20 WIB</div>
+          </div>
+        </div>
+        <div class="t-step done">
+          <div class="t-line"></div>
+          <div class="t-dot"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></div>
+          <div class="t-body">
+            <div class="t-title">Pembayaran Dikonfirmasi</div>
+            <div class="t-time">7 Agustus 2026, 14:32 WIB · Virtual Account BCA</div>
+          </div>
+        </div>
+        <div class="t-step done">
+          <div class="t-line"></div>
+          <div class="t-dot"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></div>
+          <div class="t-body">
+            <div class="t-title">Pesanan Diproses &amp; Dikemas</div>
+            <div class="t-time">7 Agustus 2026, 16:05 WIB · Termasuk pengecekan custom order</div>
+          </div>
+        </div>
+        <div class="t-step active">
+          <div class="t-line"></div>
+          <div class="t-dot"><svg width="10" height="10" viewBox="0 0 24 24" fill="white"><circle cx="12" cy="12" r="10"/></svg></div>
+          <div class="t-body">
+            <div class="t-title">Dalam Pengiriman</div>
+            <div class="t-time">8 Agustus 2026, 09:12 WIB · J&amp;T Reguler</div>
+            <div class="t-extra">
+              <span>No. Resi: <span class="resi">JX0021894567ID</span></span>
+              <button>Lacak di J&amp;T →</button>
+            </div>
+          </div>
+        </div>
+        <div class="t-step">
+          <div class="t-dot"></div>
+          <div class="t-body">
+            <div class="t-title">Pesanan Selesai</div>
+            <div class="t-time">Estimasi tiba 10 Agustus 2026</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row2">
+      <div class="card">
+        <div class="mini-label">Alamat Pengiriman</div>
+        <div class="addr-name">Rani Anggraini · 0812-3456-7890</div>
+        <div class="addr-text">Jl. Melati No. 21, RT 04/RW 02, Kel. Sukamaju, Kec. Cilodong, Kota Depok, Jawa Barat 16414</div>
+      </div>
+      <div class="card">
+        <div class="mini-label">Ringkasan Pembayaran</div>
+        <div class="addr-text" style="margin-bottom:4px;">Virtual Account BCA · Dibayar 7 Agustus 2026</div>
+        <div class="addr-text">Ongkir J&amp;T Reguler · Voucher GRATISONGKIR terpakai</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="mini-label">Produk Dipesan (2)</div>
+      <div class="item-row">
+        <div class="item-thumb"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#E14577" stroke-width="1.6"><circle cx="7" cy="6" r="2.4"/><circle cx="17" cy="6" r="2.4"/><rect x="4.5" y="9.5" width="15" height="11" rx="5.5"/></svg></div>
+        <div class="item-info"><div class="item-name">Boneka Beruang Cokelat 40cm</div><div class="item-meta">Warna: Cokelat · 1 pcs</div></div>
+        <div class="item-price">Rp89.000</div>
+      </div>
+      <div class="item-row">
+        <div class="item-thumb"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#B37E00" stroke-width="1.6"><circle cx="7" cy="6" r="2.4"/><circle cx="17" cy="6" r="2.4"/><rect x="4.5" y="9.5" width="15" height="11" rx="5.5"/></svg></div>
+        <div class="item-info"><div class="item-name">Boneka Custom by Foto</div><div class="item-meta">Referensi: foto_kucing.jpg · 1 pcs</div></div>
+        <div class="item-price">Rp165.000</div>
+      </div>
+      <div class="total-row"><span>Total Pembayaran</span><span class="amt">Rp254.000</span></div>
+    </div>
+
+    <div class="btn-row" style="margin-bottom:60px;">
+      <button class="btn-secondary">💬 Chat Admin</button>
+      <button class="btn-secondary">⚠️ Ajukan Komplain</button>
+      <a href="index.html" class="btn-primary" style="text-decoration:none; display:flex; align-items:center; justify-content:center;">Pesanan Diterima ✓</a>
+    </div>
+  </div>
+
+  <script>
+    document.querySelectorAll('.order-tab').forEach(t=>t.addEventListener('click',()=>{
+      document.querySelectorAll('.order-tab').forEach(x=>x.classList.remove('active'));
+      t.classList.add('active');
+    }));
+    document.querySelectorAll('.order-mini-card').forEach(c=>c.addEventListener('click',()=>{
+      document.querySelectorAll('.order-mini-card').forEach(x=>x.classList.remove('selected'));
+      c.classList.add('selected');
+    }));
+  </script>
+</body>
+</html>
